@@ -4,17 +4,16 @@ name: "jaffle_shop"
 version: "3.0.0"
 require-dbt-version: ">=1.5.0"
 
-dbt-cloud:
-  project-id: 275557 # Put your project id here
+profile: "jaffle_shop"
 
-profile: default # Put your profile here
-
+# Most important artefact types
 model-paths: ["models"]
-analysis-paths: ["analyses"]
 test-paths: ["data-tests"]
-seed-paths: ["seeds"]
 macro-paths: ["macros"]
+seed-paths: ["seeds"]
+# Other artefact types
 snapshot-paths: ["snapshots"]
+analysis-paths: ["analyses"]
 
 target-path: "target"
 clean-targets:
@@ -22,15 +21,21 @@ clean-targets:
   - "dbt_packages"
 
 vars:
-  "dbt_date:time_zone": "America/Los_Angeles"
+  "dbt_date:time_zone": "Australia/Melbourne"
 
 seeds:
   jaffle_shop:
-    +schema: raw
+    +schema: jaffle_shop_demo
+    +docs:
+      node_color: "#b1560f"
 
 models:
   jaffle_shop:
     staging:
       +materialized: view
+      +docs:
+        node_color: "#71706e"
     marts:
       +materialized: table
+      +docs:
+        node_color: "#d3a108"
